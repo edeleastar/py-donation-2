@@ -1,8 +1,6 @@
 from flask import render_template, session, request, redirect
 from . import accounts
 from app.models.User import User
-from app.models.User import users
-
 
 @accounts.route('/')
 def index():
@@ -22,19 +20,18 @@ def signup():
 
 @accounts.route('/register', methods=['POST'])
 def register():
-  firstname = request.form['firstName']
-  lastname  = request.form['lastName']
-  email     = request.form['email']
-  password  = request.form['password']
-  users[email] = (User (firstname, lastname, email, password))
+  user = User (firstname=request.form['firstName'], lastname=request.form['lastName'],
+               email=request.form['email'], password  = request.form['password'],
+               ID=User.objects.count() + 1)
+  user.save()
   return redirect('/')
 
 @accounts.route('/authenticate', methods=['POST'])
 def authenticate():
-  email     = request.form['email']
-  password  = request.form['password']
-  if email in users and password == users[email].password:
-    session['logged_in'] = True
-    return redirect('/donation')
-  else:
-    return redirect('/')
+  matches = User.objects(email=request.form['email'])
+  if matches.count() > 0:
+    user = matches.get(0)
+    if user.email == request.form['password']:
+      session['logged_in'] = True
+      return redirect('/donation')
+  return redirect('/')

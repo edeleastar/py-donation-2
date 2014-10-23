@@ -1,10 +1,6 @@
-donations = []
-donationId = 1
+from app import db
 
-class Donation:
-  def __init__(self, amount, method):
-    global donationId
-    self.amount = amount
-    self.method = method
-    self.id = donationId
-    donationId = donationId + 1
+class Donation(db.DynamicDocument):
+  amount = db.StringField()
+  method =  db.StringField()
+  ID = db.IntField(min_value=1)

@@ -1,5 +1,6 @@
 from app import createApp
 from flask.ext.script import Manager
+from flask.ext.mongoengine import MongoEngine
 
 app = createApp()
 manager = Manager(app)

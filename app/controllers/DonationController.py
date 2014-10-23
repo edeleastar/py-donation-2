@@ -1,5 +1,5 @@
 from flask import render_template, url_for, redirect, request
-from app.models.Donaton import Donation, donations
+from app.models.Donaton import Donation
 
 from . import donate
 
@@ -9,11 +9,10 @@ def index():
 
 @donate.route('/donation/donate', methods=['POST'])
 def donateAmount():
-  amount = request.form['amountDonated']
-  method = request.form['methodDonated']
-  donations.append(Donation(amount, method))
+  donation = Donation(request.form['amountDonated'], request.form['methodDonated'], ID=Donation.objects.count() + 1)
+  donation.save()
   return redirect('/donation')
 
 @donate.route('/donation/report')
 def report():
-  return render_template('donationcontroller/report.html', donations=donations)
+  return render_template('donationcontroller/report.html', donations=Donation.objects())
