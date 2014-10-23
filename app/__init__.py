@@ -2,7 +2,11 @@ from flask import Flask
 from flask.ext.mongoengine import MongoEngine
 
 SECRET_KEY = 'development key'
-MONGODB_SETTINGS =  {"DB": "py_donation"}
+MONGODB_SETTINGS =  \
+{
+  "DB": "py_donation",
+  "host": "mongodb://pydonation:secret@linus.mongohq.com:10003/app30853534"
+}
 
 db = MongoEngine()
 
