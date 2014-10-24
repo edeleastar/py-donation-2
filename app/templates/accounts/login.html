@@ -11,15 +11,16 @@
      </aside>
      <div class="ui ten wide column fluid form">
        <div class="ui stacked segment">
-         <form action="/authenticate" method="POST">
+         <form action="/login" method="POST">
+           {{ form.hidden_tag() }}
            <h3 class="ui header">Log-in</h3>
            <div class="field">
-             <label>Email</label>
-             <input placeholder="Email" type="text" name="email">
+             {{ form.email.label }}
+             {{ form.email (size=20) }}
            </div>
            <div class="field">
-             <label>Password</label>
-             <input type="password" name="password">
+             {{ form.password.label }}
+             {{ form.password (size=20, type="password") }}
            </div>
            <button class="ui blue submit button">Login</button>
          </form>
